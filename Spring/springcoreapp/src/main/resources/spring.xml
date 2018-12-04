@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		<context:annotation-config></context:annotation-config>
+		
+	<bean id="emp" class="com.cg.spring.core.Employee" init-method="init" destroy-method="destroyBean">
+		<constructor-arg name="id" value="123"/>
+		<constructor-arg name="name" value="munna"/>
+		<constructor-arg name="salary" value="21000"/>
+	</bean>
+	
+	<bean id="man" class="com.cg.spring.core.Manager">
+		<property name="deptno" value="104"/>
+		<property name="projectName" value="HSBC"/>
+		<property name="projectCode" value="100378124"/>
+	</bean>
+	
+	<!--  Customer bean declaration 
+	<bean id="c" class="com.cg.spring.core.beans.Customer" autowire="byName">
+		<property name="firstname" value="Chityala"/>
+		<property name="lastname" value="Babloo"/>
+		<property name="addr" ref="a"/> Inner Bean...Now let's see how autowiring works
+	</bean>
+	
+	Address bean declaration
+	<bean id="addr" class="com.cg.spring.core.beans.Address">
+		<property name="city" value="Hyderabad"/>
+		<property name="state" value="Ts"/>	
+	</bean> -->
+	
+	<!-- If u want to use constructor autowire -->
+	<bean id="cus" class="com.cg.spring.core.beans.Customer"><!-- autowire="constructor" -->
+		<property name="firstname" value="Chityala"/>
+		<property name="lastname" value="Babloo"/>
+		<property name="list">
+			<list>
+				<ref bean="addr"/>
+				<ref bean="addr2"/>
+			</list>
+		</property>
+		<property name="set">
+			<set>
+				<ref bean="addr"/>
+				<ref bean="addr2"/>
+			</set>
+		</property>
+		<property name="map">
+			<map>
+				<entry key="1" value-ref="addr"/>
+				<entry key="2" value-ref="addr2"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="addr" class="com.cg.spring.core.beans.Address" >
+		<constructor-arg name="city" value="Hyderabad" />
+		<constructor-arg name="state" value="TS"/>
+	</bean>
+	<bean id="addr2" class="com.cg.spring.core.beans.Address" >
+		<constructor-arg name="city" value="Vizag" />
+		<constructor-arg name="state" value="AP"/>
+	</bean>
+</beans>
